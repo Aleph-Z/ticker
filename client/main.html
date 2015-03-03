@@ -1,0 +1,53 @@
+<head>
+  <title>ticker</title>
+</head>
+
+<body>
+{{> marketInfo}}
+</body>
+
+<template name="marketInfo">
+Tickers:<br>
+    {{#each ticker}}
+        {{> tickerInfo}}
+    {{/each}}
+<br>
+Trade Search:<br>
+{{> search}}
+<br>
+Task Info: <input class='restart' type="button" value="Restart" /><br>
+    {{#each task}}
+        {{> taskInfo}}
+    {{/each}}
+<br>
+Logs :<br>
+    {{#each log}}
+        {{> logInfo}}
+    {{/each}}
+<br>
+</template>
+
+<template name="tickerInfo">
+Source: {{src}}, Bid: {{bid}}, Ask: {{ask}}, Date: {{$date date}}{{#if last}}, Last:{{last}}{{/if}}<br>
+</template>
+
+<template name="taskInfo">
+Task: {{task}}, Last Run: {{$date lastRun}}, Error: {{$YN error}}, Info: {{$json info}}, Total: {{#if total}}{{total}} + {{/if}}{{count}}(/{{all}}){{#if tidLast}}, Id:{{tidLast}}{{/if}}{{#if errorCount}}, Error Count:{{errorCount}}{{/if}}<br>
+</template>
+
+<template name="logInfo">
+Task: {{task}}, Last Run: {{$date lastRun}}, Info: {{$json info}}{{#if tidLast}}, Id:{{tidLast}}{{/if}}{{#if errorCount}}, Error Count:{{errorCount}}{{/if}}<br>
+</template>
+
+<template name="search">
+Src: <select class="src">{{#each srcList}} {{> srcInfo}} {{/each}} </select>
+From: <input type="number" value="0" class="from" />
+To: <input type="number" value="0" class="to" />
+<input class='search' type="button" value="Search" />
+{{info}}<br>
+<textarea rows="7" wrap="hard" style="width:95%">{{result}}</textarea><br>
+</template>
+
+<template name="srcInfo">
+	<option value={{text}} {{selected}}>{{text}}</option>
+</template>
